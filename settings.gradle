@@ -1,0 +1,5 @@
+include ':featuretwo'
+include ':featureone'
+include ':base'
+include ':app'
+rootProject.name = "ApplicationTemplate"
