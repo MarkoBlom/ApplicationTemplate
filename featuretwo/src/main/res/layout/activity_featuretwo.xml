@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         tools:context=".FeatureTwoActivity">
 
+        <!--
         <RecyclerView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -26,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:scrollbars="vertical"
             bind:ViewModel="@{viewModel}"/>
+        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

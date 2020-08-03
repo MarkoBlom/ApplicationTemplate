@@ -1,6 +1,5 @@
 package aalto.kotlin.experiment.featuretwo
 
-import aalto.kotlin.experiment.featuretwo.dagger.TestAdapter
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +22,9 @@ class BindingUtility {
                 layoutManager = _layoutManager
                 itemAnimator = DefaultItemAnimator()
                 setHasFixedSize(true)
-                setAdapter( TestAdapter(viewModel) )
+                setAdapter(
+                    TestAdapter(viewModel)
+                )
             }
         }
     }

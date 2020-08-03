@@ -1,7 +1,5 @@
-package aalto.kotlin.experiment.featuretwo.dagger
+package aalto.kotlin.experiment.featuretwo
 
-import aalto.kotlin.experiment.featuretwo.FeatureTwoViewModel
-import aalto.kotlin.experiment.featuretwo.R
 import aalto.kotlin.experiment.featuretwo.databinding.CardViewBinding
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
 
-class TestAdapter :  RecyclerView.Adapter<TestAdapter.CardViewHolder> {
+class TestAdapter(val viewModel : FeatureTwoViewModel) :
+    RecyclerView.Adapter<TestAdapter.CardViewHolder>() {
 
-    lateinit var viewModel : FeatureTwoViewModel
+    //lateinit var viewModel : FeatureTwoViewModel
 
-    constructor( vm : FeatureTwoViewModel ) { viewModel = vm }
+    //constructor( val viewModel : FeatureTwoViewModel )
 
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -34,12 +33,12 @@ class TestAdapter :  RecyclerView.Adapter<TestAdapter.CardViewHolder> {
         return view as CardViewHolder
     }
 
-    override fun getItemCount() = viewModel.data.results.size
+    override fun getItemCount() = 1 //viewModel.data.results.size
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
         // bind: item
-        holder.binder.dataItem(viewModel.data.results[position])
-        holder.binder.executePendingBindings()
+        //holder.binder.dataItem(viewModel.data.results[position])
+        //holder.binder.executePendingBindings()
     }
 }

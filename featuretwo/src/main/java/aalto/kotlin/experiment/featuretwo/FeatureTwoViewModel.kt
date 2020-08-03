@@ -9,7 +9,6 @@ import aalto.kotlin.experiment.base.network.NoConnectivityException
 import aalto.kotlin.experiment.base.network.models.DatawireRequest
 import aalto.kotlin.experiment.base.network.models.ResponseDto
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
-import aalto.kotlin.experiment.base.network.models.rickandmorty.Episodes
 import android.util.Log
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,31 +32,38 @@ class FeatureTwoViewModel(private val baseRepository: BaseRepository,
                           private val webApi: WebApi,
                           observer : IViewContract ) : BaseViewModel(observer) {
 
-    lateinit var data : Episodes
+    lateinit var data : List<Episode>
 
     override fun onCreate() {
         Log.d("=MB=","FeatureTwoViewModel::onCreate() -> get data from Rick...")
 
-        getData()
+        //getEpisode()
+        getEpisodes()
     }
 
-    private fun getData() {
+
+    /**
+     * Get multiple Episodes
+     */
+    private fun getEpisodes() {
 
         // inform view to display a progress animation
         mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
 
-        webApi.getEpisodes()
+        val episodes = "1,2,3"
+
+        webApi.getEpisodes( episodes )
             .subscribeOn( Schedulers.io() )
             // back on UI thread
             .observeOn( AndroidSchedulers.mainThread() )
-            .subscribe( object : SingleObserver<Response<Episodes>> {
+            .subscribe( object : SingleObserver<Response<List<Episode>>> {
 
                 override fun onSubscribe(d: Disposable) {
                     Log.d("=MB=","  onSubscribe(..)");
                     mDisposables.add(d)
                 }
 
-                override fun onSuccess(response: Response<Episodes>) {
+                override fun onSuccess(response: Response<List<Episode>>) {
                     Log.d("=MB=", "  -> onSuccess(resp)")
 
                     // dismiss progress animation
@@ -84,9 +90,54 @@ class FeatureTwoViewModel(private val baseRepository: BaseRepository,
     }
 
     /**
+     * Get a single Episode
+     */
+    private fun getEpisode() {
+
+        // inform view to display a progress animation
+        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
+
+        webApi.getEpisode("1")
+            .subscribeOn( Schedulers.io() )
+            // back on UI thread
+            .observeOn( AndroidSchedulers.mainThread() )
+            .subscribe( object : SingleObserver<Response<Episode>> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.d("=MB=","  onSubscribe(..)");
+                    mDisposables.add(d)
+                }
+
+                override fun onSuccess(response: Response<Episode>) {
+                    Log.d("=MB=", "  -> onSuccess(resp)")
+
+                    // dismiss progress animation
+                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
+
+                    //onResponseReceived( response.body() )
+                }
+
+                override fun onError(throwable: Throwable) {
+                    Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
+
+                    // hide progress animation
+                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
+
+                    throwable.printStackTrace()
+
+                    when( throwable) {
+                        is SocketTimeoutException -> submitTimeoutReversalRequest()
+                        is NoConnectivityException -> displayNoConnectivity()
+                        else -> Log.d("=MB=","NOK, something else went wrong ???")
+                    }
+                }
+            })
+    }
+
+    /**
      * Handle response here
      */
-    private fun onResponseReceived(resp: Episodes? ) {
+    private fun onResponseReceived(resp: List<Episode>? ) {
         Log.d("=MB=","      -> data: $resp.toString()")
 
         resp?.let { data = it }

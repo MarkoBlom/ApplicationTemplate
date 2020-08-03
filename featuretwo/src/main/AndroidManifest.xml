@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="aalto.kotlin.experiment.featuretwo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application>
         <activity android:name=".FeatureTwoActivity"
             android:label="FeatureTwo Activity">

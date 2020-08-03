@@ -40,5 +40,8 @@ class NetworkConstant {
         // DigiCert Global Root G2 (exp 1/15/2038)
         // Serial Number: ‎03 3a f1 e6 a7 11 a9 a0 bb 28 64 b1 1d 09 fa e5
         const val CA_SHA1_DigiCert_Global_Root_G2 = "sha1/df 3c 24 f9 bf d6 66 76 1b 26 80 73 fe 06 d1 cc 8d 4f 82 a4"
-    }
+
+        const val SINGLE_EPISODE = "{id}"
+
+        }
 }
