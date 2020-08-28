@@ -2,11 +2,10 @@ package aalto.kotlin.experiment.featuretwo
 
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.network.WebApi
-import aalto.kotlin.experiment.base.BaseRepository
+import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.NoConnectivityException
-import aalto.kotlin.experiment.base.network.models.DatawireRequest
 import aalto.kotlin.experiment.base.network.models.ResponseDto
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import android.util.Log
@@ -19,26 +18,31 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.custom.async
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
 /**
  *
  */
-class FeatureTwoViewModel(private val baseRepository: BaseRepository,
+class FeatureTwoViewModel(private val model: BaseRepository,
                           private val webApi: WebApi,
                           observer : IViewContract ) : BaseViewModel(observer) {
 
+    // Data to be shown in RecyclerView, stored in Model -class in previous screen
     lateinit var data : List<Episode>
 
-    override fun onCreate() {
-        Log.d("=MB=","FeatureTwoViewModel::onCreate() -> get data from Rick...")
+    lateinit var adapter : TestAdapter
 
-        //getEpisode()
-        getEpisodes()
+    override fun onCreate() {
+        Log.d("=MB=","FeatureTwoViewModel::onCreate()")
+
+        // when we get here we have data so it's ok
+        data = model.episodes!!
+
+        adapter = TestAdapter(this)
+
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -50,7 +54,7 @@ class FeatureTwoViewModel(private val baseRepository: BaseRepository,
         // inform view to display a progress animation
         mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
 
-        val episodes = "1,2,3"
+        val episodes = "1,2,3,4,5,6,7,8,9,10"
 
         webApi.getEpisodes( episodes )
             .subscribeOn( Schedulers.io() )
@@ -114,7 +118,7 @@ class FeatureTwoViewModel(private val baseRepository: BaseRepository,
                     // dismiss progress animation
                     mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
 
-                    //onResponseReceived( response.body() )
+                    //onResponseReceived( response )
                 }
 
                 override fun onError(throwable: Throwable) {

@@ -1,7 +1,7 @@
 package aalto.kotlin.experiment.base.dagger
 
 import aalto.kotlin.experiment.base.network.WebApi
-import aalto.kotlin.experiment.base.BaseRepository
+import aalto.kotlin.experiment.base.model.BaseRepository
 import dagger.Component
 import javax.inject.Singleton
 

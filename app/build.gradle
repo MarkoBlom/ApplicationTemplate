@@ -23,8 +23,8 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     // Specifies dynamic feature modules that have a dependency on

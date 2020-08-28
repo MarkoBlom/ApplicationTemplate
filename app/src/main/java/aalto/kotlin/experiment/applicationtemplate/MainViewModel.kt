@@ -1,6 +1,6 @@
 package aalto.kotlin.experiment.applicationtemplate
 
-import aalto.kotlin.experiment.base.BaseRepository
+import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel

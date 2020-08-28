@@ -1,28 +1,34 @@
 package aalto.kotlin.experiment.featureone
 
-import aalto.kotlin.experiment.base.BaseRepository
+import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
+import aalto.kotlin.experiment.base.network.NoConnectivityException
 import aalto.kotlin.experiment.base.network.WebApi
+import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 
 
 /**
  * Constructor Injection
  */
-class FeatureOneViewModel(private val baseRepository: BaseRepository,
+class FeatureOneViewModel(private val model: BaseRepository,
                           private val webApi: WebApi,
                           observer : IViewContract ) : BaseViewModel(observer) {
 
     var mCounter = 5
 
+
     override fun onCreate() {
         Log.d("=MB=","FeatureOneViewModel::onCreate()")
-
-        //mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
     }
 
     override fun onDestroy() {
@@ -49,11 +55,88 @@ class FeatureOneViewModel(private val baseRepository: BaseRepository,
     }
 
     /**
-     * Goto Feature two -btn clicked
+     * Goto Feature two -btn clicked, get data first
      */
-    fun onNextClicked2(view : View) {
-        Log.d("=MB=","FeatureOneViewModel::onNextClicked2()")
+    fun onNextClicked(view : View) {
+        Log.d("=MB=","FeatureOneViewModel::onNextClicked()")
 
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+        // check if data is persisted in Model already
+        if( !model.episodes.isNullOrEmpty() ) {
+            Log.d("=MB=","      we've data already -> go to next screen")
+            // navigate to next screen
+            mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+
+        } else {
+            Log.d("=MB=","      no data available -> next download it...")
+            getEpisodes()
+        }
+    }
+
+    /**
+     * Get multiple Episodes
+     */
+    private fun getEpisodes() {
+        Log.d("=MB=","FeatureOneViewModel::getEpisodes()")
+
+        // inform view to display a progress animation
+        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
+
+        val episodes = "1,2,3,4,5,6,7,8,9,10"
+
+        webApi.getEpisodes( episodes )
+            .subscribeOn( Schedulers.io() )
+            // back on UI thread
+            .observeOn( AndroidSchedulers.mainThread() )
+            .subscribe( object : SingleObserver<Response<List<Episode>>> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.d("=MB=","  onSubscribe(..)");
+                    mDisposables.add(d)
+                }
+
+                override fun onSuccess(response: Response<List<Episode>>) {
+                    Log.d("=MB=", "  -> onSuccess(resp)")
+
+                    // dismiss progress animation
+                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
+
+                    onResponseReceived( response.body() )
+                }
+
+                override fun onError(throwable: Throwable) {
+                    Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
+
+                    // hide progress animation
+                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
+
+                    throwable.printStackTrace()
+
+                    when( throwable) {
+                        is NoConnectivityException -> { /*displayNoConnectivity()*/ }
+                        else -> Log.d("=MB=","NOK, something else went wrong ???")
+                    }
+                }
+            })
+    }
+
+    /**
+     * Handle response here
+     */
+    private fun onResponseReceived(resp: List<Episode>? ) {
+        Log.d("=MB=","      -> data: $resp.toString()")
+
+        model.episodes = if( resp.isNullOrEmpty() ){
+            Log.d("=MB=","      -> no data, not much to do ???")
+            null
+        } else {
+            Log.d("=MB=","      -> we got data, stored in Model.")
+            // Store data to Model
+            resp
+       }
+
+        if( !model.episodes.isNullOrEmpty() ) {
+            // navigate to next screen
+            mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+        }
     }
 }

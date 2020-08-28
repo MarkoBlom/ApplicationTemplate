@@ -8,37 +8,52 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
 
-class TestAdapter(val viewModel : FeatureTwoViewModel) :
-    RecyclerView.Adapter<TestAdapter.CardViewHolder>() {
+class TestAdapter(val viewModel: FeatureTwoViewModel) :
+            RecyclerView.Adapter<TestAdapter.CardViewHolder?>() {
 
-    //lateinit var viewModel : FeatureTwoViewModel
+    /**
+     * Our own ViewHolder by extending RecyclerView.ViewHolder
+     *
+     * The view is inflated from the card_view.xml
+     * which we had defined in the layout directory.
+     *
+     * Provide a reference to the views for each data item
+     * Complex data items may need more than one view per item, and
+     * you provide access to all the views for a data item in a view holder
+     */
+    class CardViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-    //constructor( val viewModel : FeatureTwoViewModel )
-
-    class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        // Binding class: name generated from layout res file name i.e. card_view
-        var binder : CardViewBinding = DataBindingUtil.bind(itemView)!!
+        // Binding class: name generated from layout res file name i.e. layout/card_view.xml
+        var binder: CardViewBinding? = DataBindingUtil.bind(v!!)
     }
 
+    /**
+     * Create new views (invoked by the layout manager). ViewHolder pattern
+     * @param parent
+     * @param viewType
+     * @return
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+
         // In onCreateViewHolder(), the Views are created and the ViewHolder contains
         // references to them so that the data can be set quickly.
-        // Then in onBindView(), the specific data is assigned to the Views.
+        // Then in onBindView(), the specific data is assigned to each Views.
 
         // create new view:
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view,
-                                                                parent,
-                                                                false)
-        return view as CardViewHolder
-    }
+        val view: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_view, parent, false)
 
-    override fun getItemCount() = 1 //viewModel.data.results.size
+        // set the view's size, margins, paddings, click listeners and layout parameters
+        // ...
+        return CardViewHolder(view)
+    }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
 
-        // bind: item
-        //holder.binder.dataItem(viewModel.data.results[position])
-        //holder.binder.executePendingBindings()
+        holder.binder?.dataItem = viewModel.data[position]
+
+        holder.binder?.executePendingBindings()
     }
+
+    override fun getItemCount() = viewModel.data.size
 }

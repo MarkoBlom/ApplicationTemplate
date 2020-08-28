@@ -7,6 +7,7 @@
     tools:ignore="ExtraText">
 
     <data>
+        <import type="android.view.View"/>
         <import type="aalto.kotlin.experiment.featuretwo.FeatureTwoViewModel"/>
         <variable name="viewModel" type="FeatureTwoViewModel"/>
     </data>
@@ -14,20 +15,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
         tools:context=".FeatureTwoActivity">
 
-        <!--
-        <RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:scrollbars="vertical"
-            bind:ViewModel="@{viewModel}"/>
-        -->
+            bind:viewModelForTestAdapter="@{viewModel}"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

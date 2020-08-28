@@ -1,5 +1,6 @@
 package aalto.kotlin.experiment.base.mvvm_fw.view
 
+import aalto.kotlin.experiment.base.model.BaseRepository
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.res.Configuration
@@ -7,7 +8,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.elyeproj.base.mvvm_fw.viewmodel.IViewModel
+import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
 
 /**
  * Parent class for any Activity.
@@ -22,6 +23,7 @@ abstract class ViewModelActivity : AppCompatActivity(), IViewContract {
     private lateinit var mProgressDialog : ProgressDialog
 
     open lateinit var mViewModel : IViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

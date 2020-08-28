@@ -9,11 +9,9 @@ import android.util.Log
 import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.view.ViewModelActivity
 import aalto.kotlin.experiment.featureone.FeatureOneActivity
-import aalto.kotlin.experiment.featureone.dagger.DaggerFeatureOneComponent
-import aalto.kotlin.experiment.featureone.dagger.FeatureOneModule
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
-import com.elyeproj.base.mvvm_fw.viewmodel.IViewModel
+import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
 import javax.inject.Inject
 
 class MainActivity : ViewModelActivity() {

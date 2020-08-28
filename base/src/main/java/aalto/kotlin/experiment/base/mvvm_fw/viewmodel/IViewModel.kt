@@ -1,4 +1,4 @@
-package com.elyeproj.base.mvvm_fw.viewmodel
+package aalto.kotlin.experiment.base.mvvm_fw.viewmodel
 
 import android.content.Intent
 import android.content.res.Configuration

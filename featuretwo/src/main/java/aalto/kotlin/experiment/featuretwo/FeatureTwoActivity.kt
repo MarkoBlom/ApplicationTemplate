@@ -1,16 +1,18 @@
 package aalto.kotlin.experiment.featuretwo
 
 import aalto.kotlin.experiment.base.BaseApplication
-import android.os.Bundle
-import android.util.Log
 import aalto.kotlin.experiment.base.mvvm_fw.Action
+import aalto.kotlin.experiment.base.mvvm_fw.Action.*
+import aalto.kotlin.experiment.base.mvvm_fw.Action.Type.*
 import aalto.kotlin.experiment.base.mvvm_fw.view.ViewModelActivity
+import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
 import aalto.kotlin.experiment.featuretwo.dagger.DaggerFeatureTwoComponent
 import aalto.kotlin.experiment.featuretwo.dagger.FeatureTwoModule
 import aalto.kotlin.experiment.featuretwo.databinding.ActivityFeaturetwoBinding
-import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
-import com.elyeproj.base.mvvm_fw.viewmodel.IViewModel
+
 import javax.inject.Inject
 
 class FeatureTwoActivity : ViewModelActivity() {
@@ -32,13 +34,11 @@ class FeatureTwoActivity : ViewModelActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val rootView = layoutInflater.inflate(R.layout.activity_featuretwo, null, false)
-        val binding = DataBindingUtil.bind<ActivityFeaturetwoBinding>(rootView)
-
-        setContentView(rootView)
+        var binding : ActivityFeaturetwoBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_featuretwo)
 
         // bind viewModel
-        binding!!.setViewModel(mViewModel as FeatureTwoViewModel)
+        binding.viewModel = mViewModel as FeatureTwoViewModel
     }
 
     /**
@@ -48,8 +48,8 @@ class FeatureTwoActivity : ViewModelActivity() {
         Log.d("=MB=", "FeatureTwoActivity::onViewModelEvent() ${action.type.name}")
 
         when (action.type) {
-            Action.Type.PROGRESS_ANIM_SHOW -> displayProgressAnimation()
-            Action.Type.PROGRESS_ANIM_DISMISS -> hideProgressAnimation()
+            PROGRESS_ANIM_SHOW -> displayProgressAnimation()
+            PROGRESS_ANIM_DISMISS -> hideProgressAnimation()
             else -> {
                 Log.d("=MB=", "  -> Unhandled action ?");
             }

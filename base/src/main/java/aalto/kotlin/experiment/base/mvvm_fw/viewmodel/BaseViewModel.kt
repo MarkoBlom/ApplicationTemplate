@@ -1,11 +1,11 @@
 package aalto.kotlin.experiment.base.mvvm_fw.viewmodel
 
+import aalto.kotlin.experiment.base.model.BaseRepository
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
-import com.elyeproj.base.mvvm_fw.viewmodel.IViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

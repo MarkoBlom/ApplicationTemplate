@@ -2,8 +2,12 @@
     package="aalto.kotlin.experiment.featureone">
 
     <application>
-        <activity android:name=".FeatureOneActivity"
+
+        <!-- APP BAR BACK BTN navigation target: android:parentActivityName=".Activity1"-->
+        <activity
+            android:name=".FeatureOneActivity"
             android:label="FeatureOne Activity">
         </activity>
+
     </application>
 </manifest>
