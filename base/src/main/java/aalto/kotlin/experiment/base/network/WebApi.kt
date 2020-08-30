@@ -46,7 +46,7 @@ interface WebApi {
     @Headers( "Content-Type: application/json",
         "Accepts: application/json")
     @GET( NetworkConstant.SINGLE_EPISODE )
-    fun getEpisodes(@Path("id") id : String) : Single<Response<List<Episode>>>
+    fun getEpisodes(@Path("id") id : String) : Single<Response<ArrayList<Episode>>>
 
     // Add any other APIs here on ...
 }

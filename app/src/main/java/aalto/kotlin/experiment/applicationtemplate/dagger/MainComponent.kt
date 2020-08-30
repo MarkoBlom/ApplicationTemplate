@@ -9,6 +9,7 @@ import dagger.Component
 @Component(dependencies = [BaseComponent::class],
     modules = [MainModule::class])
 interface MainComponent {
+
     // Injection target:
     fun inject(mainActivity: MainActivity)
 

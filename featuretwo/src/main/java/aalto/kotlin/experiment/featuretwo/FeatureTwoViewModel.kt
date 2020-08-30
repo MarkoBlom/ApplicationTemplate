@@ -30,7 +30,7 @@ class FeatureTwoViewModel(private val model: BaseRepository,
                           observer : IViewContract ) : BaseViewModel(observer) {
 
     // Data to be shown in RecyclerView, stored in Model -class in previous screen
-    lateinit var data : List<Episode>
+    lateinit var data : ArrayList<Episode>
 
     lateinit var adapter : TestAdapter
 
@@ -60,14 +60,14 @@ class FeatureTwoViewModel(private val model: BaseRepository,
             .subscribeOn( Schedulers.io() )
             // back on UI thread
             .observeOn( AndroidSchedulers.mainThread() )
-            .subscribe( object : SingleObserver<Response<List<Episode>>> {
+            .subscribe( object : SingleObserver<Response<ArrayList<Episode>>> {
 
                 override fun onSubscribe(d: Disposable) {
                     Log.d("=MB=","  onSubscribe(..)");
                     mDisposables.add(d)
                 }
 
-                override fun onSuccess(response: Response<List<Episode>>) {
+                override fun onSuccess(response: Response<ArrayList<Episode>>) {
                     Log.d("=MB=", "  -> onSuccess(resp)")
 
                     // dismiss progress animation
@@ -141,7 +141,7 @@ class FeatureTwoViewModel(private val model: BaseRepository,
     /**
      * Handle response here
      */
-    private fun onResponseReceived(resp: List<Episode>? ) {
+    private fun onResponseReceived(resp: ArrayList<Episode>? ) {
         Log.d("=MB=","      -> data: $resp.toString()")
 
         resp?.let { data = it }

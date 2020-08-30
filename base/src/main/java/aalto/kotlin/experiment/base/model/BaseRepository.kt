@@ -1,6 +1,7 @@
 package aalto.kotlin.experiment.base.model
 
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
+import android.util.Log
 
 /**
  * This class represents the Model in MVVM -design pattern which this application applies
@@ -12,7 +13,7 @@ import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
  * ViewModel.
  * If you've multiple classes refreshing/pulling fresh data then you can apply
  * DataRepository-pattern i.e. providing APIs to do that w/o duplicating same code
- * in multiple classes/modules
+ * in multiple VM classes/modules
  *
  */
 class BaseRepository(val name: String) {
@@ -24,7 +25,14 @@ class BaseRepository(val name: String) {
     /**
      * List of Episodes (runtime data)
      */
-    var episodes : List<Episode>? = null
+    var episodes : ArrayList<Episode>? = null
 
-    // TODO : add data cleanup functionality
+    /**
+     * Clean Model, now just 'episodes'
+     */
+    fun purge() {
+        Log.d("=MB=","BaseRepository::purge()...")
+        episodes?.clear()
+        episodes = null
+    }
 }

@@ -87,14 +87,14 @@ class FeatureOneViewModel(private val model: BaseRepository,
             .subscribeOn( Schedulers.io() )
             // back on UI thread
             .observeOn( AndroidSchedulers.mainThread() )
-            .subscribe( object : SingleObserver<Response<List<Episode>>> {
+            .subscribe( object : SingleObserver<Response<ArrayList<Episode>>> {
 
                 override fun onSubscribe(d: Disposable) {
                     Log.d("=MB=","  onSubscribe(..)");
                     mDisposables.add(d)
                 }
 
-                override fun onSuccess(response: Response<List<Episode>>) {
+                override fun onSuccess(response: Response<ArrayList<Episode>>) {
                     Log.d("=MB=", "  -> onSuccess(resp)")
 
                     // dismiss progress animation
@@ -122,7 +122,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
     /**
      * Handle response here
      */
-    private fun onResponseReceived(resp: List<Episode>? ) {
+    private fun onResponseReceived(resp: ArrayList<Episode>? ) {
         Log.d("=MB=","      -> data: $resp.toString()")
 
         model.episodes = if( resp.isNullOrEmpty() ){

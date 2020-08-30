@@ -25,8 +25,6 @@ Mbase/src/main/java/aalto/kotlin/experiment/base/network/models/ResponseDto.kt,
 Rbase/src/main/java/aalto/kotlin/experiment/base/network/SSLHandshakeInterceptor.kt,4\3\43e17b4054b40787d5df8de9454d09b4911d42df
 ~
 Napp/src/main/java/aalto/kotlin/experiment/applicationtemplate/MainViewModel.kt,5\1\51cdfe2e05675d6673283c865a6c906230aeea6e
-q
-Abase/src/main/java/aalto/kotlin/experiment/base/BaseRepository.kt,8\f\8fc509f76991fb4a39a92fbb3f32c3e0154849dc
 ‰
 Yfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/dagger/FeatureTwoComponent.kt,3\2\32a88de801c3785dd5449c35471ded9cf67f0202
 ‰
@@ -83,9 +81,9 @@ Qfeatureone/src/main/java/aalto/kotlin/experiment/featureone/FeatureOneActivity.
 Qfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/FeatureTwoActivity.kt,7\6\76671248968f32a220d144d70f384b9cb31aa0cc
 z
 Jfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/TestAdapter.kt,3\3\3310fb7b64fabab785f4a3795c15e076831bc4ed
-€
-Pfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/BindingUtilityOLD.kt,6\e\6e20055a5b8f20c6995a7c5b22c1d8679d627e71
 Š
 Zfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/databinding/BindingAdapters.kt,3\5\3595dab5a73adc0a1ef78a92bdfa21dd22de9201
 |
 Lbase/src/main/java/aalto/kotlin/experiment/base/location/LocationProvider.kt,7\b\7b82c50313633921d618e74b7662ca80eb961cbc
+w
+Gbase/src/main/java/aalto/kotlin/experiment/base/model/BaseRepository.kt,0\8\088e7b3213f75d2a00154ae96c413c20899d8e21
