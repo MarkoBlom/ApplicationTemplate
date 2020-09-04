@@ -81,6 +81,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
         // inform view to display a progress animation
         mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
 
+        // Load the first ten episodes only...
         val episodes = "1,2,3,4,5,6,7,8,9,10"
 
         webApi.getEpisodes( episodes )

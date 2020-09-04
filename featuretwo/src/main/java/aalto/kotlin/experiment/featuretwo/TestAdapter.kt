@@ -1,6 +1,7 @@
 package aalto.kotlin.experiment.featuretwo
 
 import aalto.kotlin.experiment.featuretwo.databinding.CardViewBinding
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,9 @@ class TestAdapter(val viewModel: FeatureTwoViewModel) :
         holder.binder?.dataItem = viewModel.data[position]
 
         holder.binder?.executePendingBindings()
+
+        // Notifies viewModel about the currentPosition in RecyclerView to load more if needed
+        viewModel.latestPositionInRecyclerView(position)
     }
 
     override fun getItemCount() = viewModel.data.size

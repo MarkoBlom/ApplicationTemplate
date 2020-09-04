@@ -22,12 +22,16 @@ import org.jetbrains.anko.doAsync
 import retrofit2.Response
 import java.net.SocketTimeoutException
 
+private const val MAX_NUM_OF_ITEMS = 41
+
 /**
  *
  */
 class FeatureTwoViewModel(private val model: BaseRepository,
                           private val webApi: WebApi,
                           observer : IViewContract ) : BaseViewModel(observer) {
+
+    private var mDownloadInProgress = false
 
     // Data to be shown in RecyclerView, stored in Model -class in previous screen
     lateinit var data : ArrayList<Episode>
@@ -49,12 +53,8 @@ class FeatureTwoViewModel(private val model: BaseRepository,
     /**
      * Get multiple Episodes
      */
-    private fun getEpisodes() {
-
-        // inform view to display a progress animation
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
-
-        val episodes = "1,2,3,4,5,6,7,8,9,10"
+    private fun getMoreEpisodes( episodes : String ) {
+        Log.d("=MB=","FeatureTwoViewModel::getMoreEpisodes($episodes)");
 
         webApi.getEpisodes( episodes )
             .subscribeOn( Schedulers.io() )
@@ -63,69 +63,18 @@ class FeatureTwoViewModel(private val model: BaseRepository,
             .subscribe( object : SingleObserver<Response<ArrayList<Episode>>> {
 
                 override fun onSubscribe(d: Disposable) {
-                    Log.d("=MB=","  onSubscribe(..)");
+                    Log.d("=MB=","  -> onSubscribe(..)");
                     mDisposables.add(d)
                 }
 
                 override fun onSuccess(response: Response<ArrayList<Episode>>) {
                     Log.d("=MB=", "  -> onSuccess(resp)")
 
-                    // dismiss progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
-
                     onResponseReceived( response.body() )
                 }
 
                 override fun onError(throwable: Throwable) {
                     Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
-
-                    // hide progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
-
-                    throwable.printStackTrace()
-
-                    when( throwable) {
-                        is SocketTimeoutException -> submitTimeoutReversalRequest()
-                        is NoConnectivityException -> displayNoConnectivity()
-                        else -> Log.d("=MB=","NOK, something else went wrong ???")
-                    }
-                }
-            })
-    }
-
-    /**
-     * Get a single Episode
-     */
-    private fun getEpisode() {
-
-        // inform view to display a progress animation
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
-
-        webApi.getEpisode("1")
-            .subscribeOn( Schedulers.io() )
-            // back on UI thread
-            .observeOn( AndroidSchedulers.mainThread() )
-            .subscribe( object : SingleObserver<Response<Episode>> {
-
-                override fun onSubscribe(d: Disposable) {
-                    Log.d("=MB=","  onSubscribe(..)");
-                    mDisposables.add(d)
-                }
-
-                override fun onSuccess(response: Response<Episode>) {
-                    Log.d("=MB=", "  -> onSuccess(resp)")
-
-                    // dismiss progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
-
-                    //onResponseReceived( response )
-                }
-
-                override fun onError(throwable: Throwable) {
-                    Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
-
-                    // hide progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
 
                     throwable.printStackTrace()
 
@@ -142,9 +91,15 @@ class FeatureTwoViewModel(private val model: BaseRepository,
      * Handle response here
      */
     private fun onResponseReceived(resp: ArrayList<Episode>? ) {
-        Log.d("=MB=","      -> data: $resp.toString()")
 
-        resp?.let { data = it }
+        resp?.let {
+            data.addAll(it)
+            adapter.notifyDataSetChanged()
+        }
+
+        Log.d("=MB=","      onResponseReceived -> new data.size = ${data.size}")
+
+        mDownloadInProgress = false
     }
 
 
@@ -185,5 +140,32 @@ class FeatureTwoViewModel(private val model: BaseRepository,
         ResponseDto("your data")
     }
 
+    fun latestPositionInRecyclerView( currentPosition : Int) {
 
+        // We are downloading already
+        if( mDownloadInProgress || data.size == MAX_NUM_OF_ITEMS )
+            return
+
+        // current data size
+        val size = data.size
+
+        // Let's anticipate little bit: If user has scrolled down to
+        // the second last item in the list then we download more, e.g. next 5 items or so
+        if( size < MAX_NUM_OF_ITEMS && currentPosition >= size-2 ){
+
+            mDownloadInProgress = true
+
+            var items = ""
+                if (size == 35) {
+                    items = "36,37,38,39,40,41"
+                } else {
+                    for (index in size+1 until size+5) {
+                        items += "${index},"
+                    }
+                    items += "${size + 5}"
+                }
+
+            getMoreEpisodes(items)
+        }
+    }
 }
