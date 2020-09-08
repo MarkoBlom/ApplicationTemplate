@@ -8,6 +8,8 @@ import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.NoConnectivityException
 import aalto.kotlin.experiment.base.network.models.ResponseDto
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
+import aalto.kotlin.experiment.featuretwo.adapter.ChildAdapter
+import aalto.kotlin.experiment.featuretwo.adapter.ParentAdapter
 import android.util.Log
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,10 +35,12 @@ class FeatureTwoViewModel(private val model: BaseRepository,
 
     private var mDownloadInProgress = false
 
-    // Data to be shown in RecyclerView, stored in Model -class in previous screen
+    // Data to be shown in 'parent' RecyclerView, it's stored in Model -class from previous screen
     lateinit var data : ArrayList<Episode>
 
-    lateinit var adapter : TestAdapter
+    lateinit var adapter : ParentAdapter
+
+    lateinit var childAdapter : ChildAdapter
 
     override fun onCreate() {
         Log.d("=MB=","FeatureTwoViewModel::onCreate()")
@@ -44,9 +48,13 @@ class FeatureTwoViewModel(private val model: BaseRepository,
         // when we get here we have data so it's ok
         data = model.episodes!!
 
-        adapter = TestAdapter(this)
-
+        // Main RecyclerView
+        adapter = ParentAdapter(this)
         adapter.notifyDataSetChanged()
+
+        // Adapter for a child RecyclerView
+        childAdapter = ChildAdapter(this)
+        childAdapter.notifyDataSetChanged()
     }
 
 
@@ -95,6 +103,7 @@ class FeatureTwoViewModel(private val model: BaseRepository,
         resp?.let {
             data.addAll(it)
             adapter.notifyDataSetChanged()
+            childAdapter.notifyDataSetChanged()
         }
 
         Log.d("=MB=","      onResponseReceived -> new data.size = ${data.size}")

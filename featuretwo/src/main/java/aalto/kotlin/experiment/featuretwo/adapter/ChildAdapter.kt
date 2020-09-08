@@ -1,16 +1,19 @@
-package aalto.kotlin.experiment.featuretwo
+package aalto.kotlin.experiment.featuretwo.adapter
 
-import aalto.kotlin.experiment.featuretwo.databinding.CardViewBinding
-import android.util.Log
+import aalto.kotlin.experiment.featuretwo.FeatureTwoViewModel
+import aalto.kotlin.experiment.featuretwo.R
+import aalto.kotlin.experiment.featuretwo.databinding.ChildRecyclerViewBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
+class ChildAdapter(val viewModel: FeatureTwoViewModel) :
+    RecyclerView.Adapter<ChildAdapter.ViewHolder?>() {
 
-class TestAdapter(val viewModel: FeatureTwoViewModel) :
-            RecyclerView.Adapter<TestAdapter.CardViewHolder?>() {
+    var characters : ArrayList<String> = arrayListOf("")
+
 
     /**
      * Our own ViewHolder by extending RecyclerView.ViewHolder
@@ -22,10 +25,10 @@ class TestAdapter(val viewModel: FeatureTwoViewModel) :
      * Complex data items may need more than one view per item, and
      * you provide access to all the views for a data item in a view holder
      */
-    class CardViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-        // Binding class: name generated from layout res file name i.e. layout/card_view.xml
-        var binder: CardViewBinding? = DataBindingUtil.bind(v!!)
+        // Binding class: name generated from layout res file name i.e. layout/child_recycler_view.xml
+        var binder: ChildRecyclerViewBinding? = DataBindingUtil.bind(v!!)
     }
 
     /**
@@ -34,7 +37,7 @@ class TestAdapter(val viewModel: FeatureTwoViewModel) :
      * @param viewType
      * @return
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         // In onCreateViewHolder(), the Views are created and the ViewHolder contains
         // references to them so that the data can be set quickly.
@@ -42,22 +45,20 @@ class TestAdapter(val viewModel: FeatureTwoViewModel) :
 
         // create new view:
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view, parent, false)
+            .inflate(R.layout.child_recycler_view, parent, false)
 
         // set the view's size, margins, paddings, click listeners and layout parameters
         // ...
-        return CardViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.binder?.dataItem = viewModel.data[position]
+        holder.binder?.characterUrl = characters?.get(position)
 
         holder.binder?.executePendingBindings()
-
-        // Notifies viewModel about the currentPosition in RecyclerView to load more if needed
-        viewModel.latestPositionInRecyclerView(position)
     }
 
-    override fun getItemCount() = viewModel.data.size
+    override fun getItemCount() = characters.size
+
 }
