@@ -10,6 +10,9 @@
         <import type="aalto.kotlin.experiment.featuretwo.FeatureTwoViewModel"/>
         <variable name="viewModel" type="FeatureTwoViewModel"/>
         <variable name="characterUrl" type="String"/>
+        <variable name="extra" type="String"/>
+        <variable name="characterItemOnClickListener" type="android.view.View.OnClickListener"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:padding="15dp"
             android:layout_gravity="center_vertical"
             android:maxLines="1"
             android:textColor="@android:color/holo_blue_dark"
@@ -35,6 +38,7 @@
             app:autoSizeMaxTextSize="17sp"
             app:autoSizeStepGranularity="1sp"
             android:text="@{characterUrl}"
+            android:onClick="@{characterItemOnClickListener}"
             tools:text="CHARACTER"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

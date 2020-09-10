@@ -79,8 +79,6 @@ Rfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/FeatureTwoViewModel
 Qfeatureone/src/main/java/aalto/kotlin/experiment/featureone/FeatureOneActivity.kt,4\4\4405c05b2510d47d02f2ed521595e929b33e2990
 Å
 Qfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/FeatureTwoActivity.kt,7\6\76671248968f32a220d144d70f384b9cb31aa0cc
-z
-Jfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/TestAdapter.kt,3\3\3310fb7b64fabab785f4a3795c15e076831bc4ed
 ä
 Zfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/databinding/BindingAdapters.kt,3\5\3595dab5a73adc0a1ef78a92bdfa21dd22de9201
 |

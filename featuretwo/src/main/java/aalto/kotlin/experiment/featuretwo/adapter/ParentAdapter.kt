@@ -56,6 +56,7 @@ class ParentAdapter(val viewModel: FeatureTwoViewModel) :
 
         holder.binder?.viewModel = viewModel
 
+        // binding data (characters) to a child RecyclerView
         holder.binder?.characters = viewModel.data[position].characters
 
         holder.binder?.executePendingBindings()

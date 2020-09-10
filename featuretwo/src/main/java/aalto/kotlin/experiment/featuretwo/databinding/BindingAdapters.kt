@@ -45,8 +45,3 @@ fun bindViewModelForCharactersAdapter(view: RecyclerView,
         adapter = viewModel.childAdapter
     }
 }
-
-
-
-
-

@@ -11,6 +11,8 @@ import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import aalto.kotlin.experiment.featuretwo.adapter.ChildAdapter
 import aalto.kotlin.experiment.featuretwo.adapter.ParentAdapter
 import android.util.Log
+import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -151,7 +153,7 @@ class FeatureTwoViewModel(private val model: BaseRepository,
 
     fun latestPositionInRecyclerView( currentPosition : Int) {
 
-        // We are downloading already
+        // We are downloading already OR have all the data items already
         if( mDownloadInProgress || data.size == MAX_NUM_OF_ITEMS )
             return
 
@@ -176,5 +178,17 @@ class FeatureTwoViewModel(private val model: BaseRepository,
 
             getMoreEpisodes(items)
         }
+    }
+
+    /**
+     *
+     */
+    fun onCharacterClicked(url : String?) {
+        Log.d("=MB=","FeatureTwoViewModel::onCharacterClicked(${url})")
+
+        // check if we have this data in the Model
+
+
+        // if not then make an API call using GraphQL API
     }
 }

@@ -14,6 +14,7 @@ class ChildAdapter(val viewModel: FeatureTwoViewModel) :
 
     var characters : ArrayList<String> = arrayListOf("")
 
+    var url = ""
 
     /**
      * Our own ViewHolder by extending RecyclerView.ViewHolder
@@ -54,7 +55,12 @@ class ChildAdapter(val viewModel: FeatureTwoViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.binder?.characterUrl = characters?.get(position)
+        holder.binder?.characterUrl = characters.get(position)
+
+        url = characters.get(position)
+
+        holder.binder?.characterItemOnClickListener = View.OnClickListener {
+            viewModel.onCharacterClicked( url) }
 
         holder.binder?.executePendingBindings()
     }
