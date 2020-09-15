@@ -13,6 +13,9 @@ import aalto.kotlin.experiment.featuretwo.adapter.ParentAdapter
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.coroutines.toDeferred
+import example.rocketserver.LaunchListQuery
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -190,5 +193,19 @@ class FeatureTwoViewModel(private val model: BaseRepository,
 
 
         // if not then make an API call using GraphQL API
+
+        // 1. just for testing Apollo GraphQL client
+        // - launch a Coroutine to execute in IO context,
+        // - get handle to clean up any pending requests
+        // - no exception handling
+
+        val apolloClient = ApolloClient.builder()
+            .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com")
+            .build()
+
+        launch(IO) {
+            val response = apolloClient.query(LaunchListQuery()).toDeferred().await()
+            Log.d("=MB=", "     -> response: ${response?.toString()}" )
+        }
     }
 }

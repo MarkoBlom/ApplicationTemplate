@@ -23,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 open class BaseViewModel(observer : IViewContract) : IViewModel, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + mJob
+        get() = Dispatchers.Main // + mJob
 
     protected lateinit var mJob : Job
 

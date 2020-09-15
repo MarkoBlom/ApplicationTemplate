@@ -85,3 +85,7 @@ Zfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/databinding/Binding
 Lbase/src/main/java/aalto/kotlin/experiment/base/location/LocationProvider.kt,7\b\7b82c50313633921d618e74b7662ca80eb961cbc
 w
 Gbase/src/main/java/aalto/kotlin/experiment/base/model/BaseRepository.kt,0\8\088e7b3213f75d2a00154ae96c413c20899d8e21
+„
+Tfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ParentAdapter.kt,7\7\775942ea561645dc0148536bb5fc2c85ead92f2f
+ƒ
+Sfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ChildAdapter.kt,f\6\f6ac135ed3d62666f4759e172dadc98164744f9e
