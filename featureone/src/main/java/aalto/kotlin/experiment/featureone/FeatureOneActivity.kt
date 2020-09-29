@@ -31,7 +31,7 @@ class FeatureOneActivity : ViewModelActivity() {
      */
     init {
         DaggerFeatureOneComponent.builder()
-            .featureOneModule( FeatureOneModule(this) ) // IViewContract i.e. observer
+            .featureOneModule( FeatureOneModule() )
             .baseComponent( baseComponent )
             .build()
             .inject(this)
@@ -58,10 +58,10 @@ class FeatureOneActivity : ViewModelActivity() {
     }
 
     /**
-     * Callback from ViewModel
+     * LiveData observer, callback from ViewModel
      */
-    override fun onViewModelEvent(action: Action) {
-        Log.d("=MB=","FeatureOneActivity::onViewModelEvent() ${action.type.name}")
+    override fun onNextAction(action: Action) {
+        Log.d("=MB=","FeatureOneActivity::onNextAction(${action.type.name})")
 
         when (action.type) {
             NEXT_SCREEN -> {

@@ -1,11 +1,13 @@
 package aalto.kotlin.experiment.base.mvvm_fw.viewmodel
 
-import aalto.kotlin.experiment.base.model.BaseRepository
+import aalto.kotlin.experiment.base.mvvm_fw.Action
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,18 +22,23 @@ import kotlin.coroutines.CoroutineContext
  * https://developer.android.com/guide/components/activities/activity-lifecycle
  *
  */
-open class BaseViewModel(observer : IViewContract) : IViewModel, CoroutineScope {
+open class BaseViewModel : IViewModel, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main // + mJob
 
     protected lateinit var mJob : Job
 
+    // Create a LiveData with type of Action
+    val nextAction: MutableLiveData<Action> by lazy {
+        MutableLiveData<Action>()
+    }
+
     // take care of your disposables
     protected val mDisposables = CompositeDisposable()
 
     // View is the observer, use weak reference
-    var mObserver = WeakReference<IViewContract>(observer)
+    //var mObserver = WeakReference<IViewContract>(observer)
 
     // Handle lifecycle callbacks from View here:
     override fun onCreate() {
@@ -65,7 +72,7 @@ open class BaseViewModel(observer : IViewContract) : IViewModel, CoroutineScope 
 
 
         // By default ViewModel's onCreate -notification does nothing else
-        mObserver.clear()
+        //mObserver.clear()
 
         mDisposables.clear()
     }

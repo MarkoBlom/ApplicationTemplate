@@ -89,3 +89,5 @@ Gbase/src/main/java/aalto/kotlin/experiment/base/model/BaseRepository.kt,0\8\08
 Tfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ParentAdapter.kt,7\7\775942ea561645dc0148536bb5fc2c85ead92f2f
 ƒ
 Sfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ChildAdapter.kt,f\6\f6ac135ed3d62666f4759e172dadc98164744f9e
+j
+:featuretwo/src/main/graphql/example/rocketserver/Apollo.kt,8\2\827f9d9434d99386c66c2aff58d0a2829aa56405

@@ -12,8 +12,7 @@ import android.view.View
  *
  */
 class MainViewModel(private val baseRepository: BaseRepository,
-                    private val webApi: WebApi,
-                    observer : IViewContract ) : BaseViewModel(observer){
+                    private val webApi: WebApi ) : BaseViewModel(){
 
     /**
      *
@@ -39,7 +38,7 @@ class MainViewModel(private val baseRepository: BaseRepository,
     fun onNextClicked(view : View) {
         Log.d("=MB=","MainViewModel::onNextClicked()")
 
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+        nextAction.value = Action.create(Action.Type.NEXT_SCREEN)
     }
 
 }

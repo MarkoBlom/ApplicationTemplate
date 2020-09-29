@@ -21,8 +21,8 @@ import retrofit2.Response
  * Constructor Injection
  */
 class FeatureOneViewModel(private val model: BaseRepository,
-                          private val webApi: WebApi,
-                          observer : IViewContract ) : BaseViewModel(observer) {
+                          private val webApi: WebApi
+                           ) : BaseViewModel() {
 
     var mCounter = 5
 
@@ -63,8 +63,8 @@ class FeatureOneViewModel(private val model: BaseRepository,
         // check if data is persisted in Model already
         if( !model.episodes.isNullOrEmpty() ) {
             Log.d("=MB=","      we've data already -> go to next screen")
-            // navigate to next screen
-            mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+            // send action to view (LiveData) : Navigate to next screen
+            nextAction.setValue( Action.create(Action.Type.NEXT_SCREEN) )
 
         } else {
             Log.d("=MB=","      no data available -> next download it...")
@@ -79,7 +79,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
         Log.d("=MB=","FeatureOneViewModel::getEpisodes()")
 
         // inform view to display a progress animation
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_SHOW))
+        nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_SHOW)
 
         // Load the first ten episodes only...
         val episodes = "1,2,3,4,5,6,7,8,9,10"
@@ -99,8 +99,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
                     Log.d("=MB=", "  -> onSuccess(resp)")
 
                     // dismiss progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
-
+                    nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_DISMISS)
                     onResponseReceived( response.body() )
                 }
 
@@ -108,7 +107,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
                     Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
 
                     // hide progress animation
-                    mObserver.get()?.onViewModelEvent( Action.create(Action.Type.PROGRESS_ANIM_DISMISS))
+                    nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_DISMISS)
 
                     throwable.printStackTrace()
 
@@ -137,7 +136,7 @@ class FeatureOneViewModel(private val model: BaseRepository,
 
         if( !model.episodes.isNullOrEmpty() ) {
             // navigate to next screen
-            mObserver.get()?.onViewModelEvent( Action.create(Action.Type.NEXT_SCREEN))
+            nextAction.value = Action.create(Action.Type.NEXT_SCREEN)
         }
     }
 }

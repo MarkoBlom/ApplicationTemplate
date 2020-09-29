@@ -9,12 +9,11 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainModule(var observer : IViewContract) {
+class MainModule() {
 
     @Provides
     fun providesMainViewModel(baseRepository: BaseRepository,
                               webApi: WebApi
-    ) : IViewModel
-            = MainViewModel(baseRepository, webApi, observer)
+    ) : IViewModel = MainViewModel(baseRepository, webApi)
 
 }

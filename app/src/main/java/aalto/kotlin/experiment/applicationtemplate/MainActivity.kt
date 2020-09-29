@@ -24,7 +24,7 @@ class MainActivity : ViewModelActivity() {
      */
     init {
         DaggerMainComponent.builder()
-            .mainModule( MainModule(this) ) // IViewContract i.e. observer
+            .mainModule( MainModule() )
             .baseComponent(BaseApplication.baseComponent)
             .build()
             .inject(this)
@@ -44,10 +44,10 @@ class MainActivity : ViewModelActivity() {
     }
 
     /**
-     * Callback from ViewModel
+     * LiveData handler
      */
-    override fun onViewModelEvent(action: Action) {
-        Log.d("=MB=","MainActivity::onViewModelEvent() ${action.type.name}")
+    override fun onNextAction(action: Action) {
+        Log.d("=MB=","MainActivity::onNextAction(${action.type.name})")
 
         when (action.type) {
             Action.Type.NEXT_SCREEN -> {

@@ -11,8 +11,6 @@ import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import aalto.kotlin.experiment.featuretwo.adapter.ChildAdapter
 import aalto.kotlin.experiment.featuretwo.adapter.ParentAdapter
 import android.util.Log
-import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.toDeferred
 import example.rocketserver.LaunchListQuery
@@ -35,8 +33,7 @@ private const val MAX_NUM_OF_ITEMS = 41
  *
  */
 class FeatureTwoViewModel(private val model: BaseRepository,
-                          private val webApi: WebApi,
-                          observer : IViewContract ) : BaseViewModel(observer) {
+                          private val webApi: WebApi) : BaseViewModel() {
 
     private var mDownloadInProgress = false
 
@@ -122,7 +119,7 @@ class FeatureTwoViewModel(private val model: BaseRepository,
      */
     private fun displayNoConnectivity() {
         val data = mapOf("TITLE" to "Error", "MSG" to "Check your connectivity and try again")
-        mObserver.get()?.onViewModelEvent( Action.create(Action.Type.SHOW_WARNING_DIALOG, data))
+        nextAction.value = Action.create(Action.Type.SHOW_WARNING_DIALOG, data)
     }
 
 
@@ -204,8 +201,10 @@ class FeatureTwoViewModel(private val model: BaseRepository,
             .build()
 
         launch(IO) {
-            val response = apolloClient.query(LaunchListQuery()).toDeferred().await()
+            val response: com.apollographql.apollo.api.Response<LaunchListQuery.Data> = apolloClient.query(LaunchListQuery()).toDeferred().await()
             Log.d("=MB=", "     -> response: ${response?.toString()}" )
+            // Save item to model->database
+
         }
     }
 }

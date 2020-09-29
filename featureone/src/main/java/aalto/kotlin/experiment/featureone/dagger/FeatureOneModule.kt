@@ -9,12 +9,11 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class FeatureOneModule(var observer : IViewContract) {
+class FeatureOneModule() {
 
     @Provides
     fun providesFeatureOneViewModel(model: BaseRepository,
                                     webApi: WebApi
-    ) : IViewModel
-            = FeatureOneViewModel(model, webApi, observer)
+    ) : IViewModel = FeatureOneViewModel(model, webApi)
 
 }

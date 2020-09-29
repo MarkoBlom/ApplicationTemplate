@@ -1,6 +1,8 @@
 package aalto.kotlin.experiment.base.mvvm_fw.view
 
 import aalto.kotlin.experiment.base.model.BaseRepository
+import aalto.kotlin.experiment.base.mvvm_fw.Action
+import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.res.Configuration
@@ -9,6 +11,7 @@ import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
+import androidx.lifecycle.Observer
 
 /**
  * Parent class for any Activity.
@@ -24,9 +27,16 @@ abstract class ViewModelActivity : AppCompatActivity(), IViewContract {
 
     open lateinit var mViewModel : IViewModel
 
+    // Create the observer which notifies the View with an Action object
+    val actionObserver = Observer<Action> { newAction ->
+        onNextAction(newAction)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        (mViewModel as BaseViewModel).nextAction.observe(this, actionObserver)
 
         mViewModel.onCreate()
     }
@@ -137,8 +147,8 @@ abstract class ViewModelActivity : AppCompatActivity(), IViewContract {
             if( it.isShowing )
                 mProgressDialog.dismiss()
         }
-
     }
 
+    override fun onNextAction( action : Action) { /* stub */}
 
 }

@@ -25,7 +25,7 @@ class FeatureTwoActivity : ViewModelActivity() {
      */
     init {
         DaggerFeatureTwoComponent.builder()
-            .featureTwoModule( FeatureTwoModule(this) ) // IViewContract i.e. observer
+            .featureTwoModule( FeatureTwoModule() )
             .baseComponent(BaseApplication.baseComponent)
             .build()
             .inject(this)
@@ -44,8 +44,8 @@ class FeatureTwoActivity : ViewModelActivity() {
     /**
      * Handles Callbacks from ViewModel
      */
-    override fun onViewModelEvent(action: Action) {
-        Log.d("=MB=", "FeatureTwoActivity::onViewModelEvent() ${action.type.name}")
+    override fun onNextAction(action: Action) {
+        Log.d("=MB=", "FeatureTwoActivity::onNextAction(${action.type.name})")
 
         when (action.type) {
             PROGRESS_ANIM_SHOW -> displayProgressAnimation()

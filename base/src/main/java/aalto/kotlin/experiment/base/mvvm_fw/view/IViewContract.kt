@@ -4,15 +4,14 @@ import aalto.kotlin.experiment.base.mvvm_fw.Action
 
 /**
  * This is a contract between View and ViewModel:
- * View exposes only this API method for ViewModel(s) to consume i.a
- * callback from ViewModel -> View.
+ * MutableLiveData handler
  */
 interface IViewContract {
 
     /**
-     * Action (request) from ViewModel to View
-     * @param action
+     * Function to handle MutableLiveData updates from ViewModel
+     * @param action Action (request) from ViewModel to View
      */
-    open fun onViewModelEvent(action : Action)
+    open fun onNextAction(action : Action)
 
 }
