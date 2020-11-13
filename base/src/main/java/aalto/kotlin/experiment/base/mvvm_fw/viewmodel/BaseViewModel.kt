@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import io.reactivex.disposables.CompositeDisposable

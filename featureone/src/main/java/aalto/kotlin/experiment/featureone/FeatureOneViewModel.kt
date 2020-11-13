@@ -6,6 +6,7 @@ import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.NoConnectivityException
 import aalto.kotlin.experiment.base.network.WebApi
+import aalto.kotlin.experiment.base.network.models.pfj.PFJLocation
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,66 @@ class FeatureOneViewModel(private val model: BaseRepository,
 
     override fun onCreate() {
         Log.d("=MB=","FeatureOneViewModel::onCreate()")
+
+        if (model.pfjLocations.isEmpty() )
+            getPFJLocations()
     }
+
+    /**
+     * GET PFC locations for map
+     */
+    private fun getPFJLocations() {
+        Log.d("=MB=", "FeatureOneViewModel::getPFJLocations()")
+
+        // inform view to display a progress animation
+        nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_SHOW)
+
+        webApi.getPFJLocations()
+            .subscribeOn( Schedulers.io() )
+            // back on UI thread
+            .observeOn( AndroidSchedulers.mainThread() )
+            .subscribe( object : SingleObserver<Response<ArrayList<PFJLocation>>> {
+
+                override fun onSubscribe(d: Disposable) {
+                    Log.d("=MB=","  onSubscribe(..)");
+                    mDisposables.add(d)
+                }
+
+                override fun onSuccess(response: Response<ArrayList<PFJLocation>>) {
+                    Log.d("=MB=", "  -> onSuccess(resp)")
+
+                    // dismiss progress animation
+                    nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_DISMISS)
+                    onLocationsDataReceived( response.body() )
+                }
+
+                override fun onError(throwable: Throwable) {
+                    Log.d("=MB=", "  -> ****** onError(throwable): $throwable")
+
+                    // hide progress animation
+                    nextAction.value = Action.create(Action.Type.PROGRESS_ANIM_DISMISS)
+
+                    throwable.printStackTrace()
+
+                    when( throwable) {
+                        is NoConnectivityException -> { /*displayNoConnectivity()*/ }
+                        else -> Log.d("=MB=","NOK, something else went wrong ???")
+                    }
+                }
+            })
+    }
+
+
+    private fun onLocationsDataReceived(resp: ArrayList<PFJLocation>? ) {
+
+        // save to Repository
+        resp?.let{
+            model.pfjLocations = resp
+        }
+
+        nextAction.value = Action.create(Action.Type.PFJ_LOCATION_DATA_READY)
+    }
+
 
     override fun onDestroy() {
         Log.d("=MB=","FeatureOneViewModel::onDestroy()")
@@ -61,15 +121,15 @@ class FeatureOneViewModel(private val model: BaseRepository,
         Log.d("=MB=","FeatureOneViewModel::onNextClicked()")
 
         // check if data is persisted in Model already
-        if( !model.episodes.isNullOrEmpty() ) {
-            Log.d("=MB=","      we've data already -> go to next screen")
-            // send action to view (LiveData) : Navigate to next screen
-            nextAction.setValue( Action.create(Action.Type.NEXT_SCREEN) )
-
-        } else {
-            Log.d("=MB=","      no data available -> next download it...")
-            getEpisodes()
-        }
+//        if( !model.episodes.isNullOrEmpty() ) {
+//            Log.d("=MB=","      we've data already -> go to next screen")
+//            // send action to view (LiveData) : Navigate to next screen
+//            nextAction.setValue( Action.create(Action.Type.NEXT_SCREEN) )
+//
+//        } else {
+//            Log.d("=MB=","      no data available -> next download it...")
+//            getEpisodes()
+//        }
     }
 
     /**

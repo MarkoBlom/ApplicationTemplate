@@ -3,6 +3,7 @@
 
     <application>
 
+
         <!-- APP BAR BACK BTN navigation target: android:parentActivityName=".Activity1"-->
         <activity
             android:name=".FeatureOneActivity"

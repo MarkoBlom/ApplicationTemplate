@@ -4,6 +4,7 @@ import aalto.kotlin.experiment.base.dagger.DaggerBaseComponent
 import aalto.kotlin.experiment.base.utilities.ActivityLifecycles
 import android.app.Application
 import android.util.Log
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * Application class itself
@@ -23,6 +24,11 @@ class BaseApplication: Application() {
      */
     override fun onCreate() {
         super.onCreate()
+
+        // Memory leak detection by using LeakCanary
+        // (Profiler tool is invented too but LeakCanary is
+        // more 'visual')
+        LeakCanary.install(this)
 
         // Lifecycle callbacks for cleaning the Model
         registerActivityLifecycleCallbacks(mLifecycles)

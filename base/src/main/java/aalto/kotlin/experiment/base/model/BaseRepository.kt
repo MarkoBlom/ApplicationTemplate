@@ -1,5 +1,6 @@
 package aalto.kotlin.experiment.base.model
 
+import aalto.kotlin.experiment.base.network.models.pfj.PFJLocation
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import android.util.Log
 
@@ -28,11 +29,19 @@ class BaseRepository(val name: String) {
     var episodes : ArrayList<Episode>? = null
 
     /**
-     * Clean Model, now just 'episodes'
+     * List of PFJ locations (runtime data)
+     */
+    var pfjLocations : ArrayList<PFJLocation> = ArrayList()
+
+    /**
+     * Clean Model, now just 'episodes' and 'PFJ locations'
      */
     fun purge() {
         Log.d("=MB=","BaseRepository::purge()...")
         episodes?.clear()
         episodes = null
+
+        pfjLocations?.clear()
+
     }
 }

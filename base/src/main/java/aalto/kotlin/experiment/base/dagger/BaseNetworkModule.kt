@@ -26,7 +26,7 @@ class BaseNetworkModule {
     }
 
     /**
-     * This is received from SRS Registration response (as is DID)
+     *
      */
     @Provides
     @Named(NAME_BASE_URL)

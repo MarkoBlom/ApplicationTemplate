@@ -2,6 +2,7 @@ package aalto.kotlin.experiment.base.network
 
 import aalto.kotlin.experiment.base.network.models.DatawireRequest
 import aalto.kotlin.experiment.base.network.models.ResponseDto
+import aalto.kotlin.experiment.base.network.models.pfj.PFJLocation
 import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import io.reactivex.Single
 import retrofit2.Response
@@ -47,6 +48,17 @@ interface WebApi {
         "Accepts: application/json")
     @GET( NetworkConstant.SINGLE_EPISODE )
     fun getEpisodes(@Path("id") id : String) : Single<Response<ArrayList<Episode>>>
+
+
+
+    /**
+     *
+     */
+    @Headers( "Content-Type: application/json",
+        "Accepts: application/json")
+    @GET("locations.json")
+    fun getPFJLocations() : Single<Response<ArrayList<PFJLocation>>>
+
 
     // Add any other APIs here on ...
 }

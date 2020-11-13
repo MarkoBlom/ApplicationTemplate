@@ -10,8 +10,10 @@ class NetworkConstant {
 
         /**
          * https://rickandmortyapi.com/api/episode/
+         *
+         * https://raw.githubusercontent.com/simonsickle/pfj-locations/master/locations.json
          */
-        const val BASE_URL = "rickandmortyapi.com/api/episode/"
+        const val BASE_URL = "raw.githubusercontent.com/simonsickle/pfj-locations/master/"
 
         const val CONNECT_TIMEOUT = 1L // [min]
         //const val READ_TIMEOUT = 1L // [min]

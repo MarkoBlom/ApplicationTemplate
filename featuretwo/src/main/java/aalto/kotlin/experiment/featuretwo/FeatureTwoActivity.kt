@@ -50,6 +50,7 @@ class FeatureTwoActivity : ViewModelActivity() {
         when (action.type) {
             PROGRESS_ANIM_SHOW -> displayProgressAnimation()
             PROGRESS_ANIM_DISMISS -> hideProgressAnimation()
+            SHOW_WARNING_DIALOG -> {} // parse data with title and message
             else -> {
                 Log.d("=MB=", "  -> Unhandled action ?");
             }
