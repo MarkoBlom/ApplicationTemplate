@@ -6,9 +6,12 @@ import aalto.kotlin.experiment.base.network.NetworkConstant.Companion.CA_SHA1_Di
 import aalto.kotlin.experiment.base.network.NetworkConstant.Companion.CA_SHA1_VeriSign_Class_3_Public_Primary_Certification_Authority_G5
 import aalto.kotlin.experiment.base.network.SSLHandshakeInterceptor
 import aalto.kotlin.experiment.base.network.WebApi
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
+import kotlinx.serialization.json.Json
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -87,13 +90,15 @@ class BaseNetworkModule {
     @Singleton
     fun provideRetrofit(@Named(NAME_BASE_URL) baseUrl : String,
                         okHttpClient : OkHttpClient) =
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            //XML converter: .addConverterFactory( SimpleXmlConverterFactory.createNonStrict( Persister(AnnotationStrategy())))
-            .addConverterFactory( GsonConverterFactory.create() )
-            .addCallAdapterFactory( RxJava2CallAdapterFactory.create() )
-            .client(okHttpClient)
-            .build()
+
+    Retrofit.Builder()
+        .baseUrl(baseUrl)
+        //XML converter: .addConverterFactory( SimpleXmlConverterFactory.createNonStrict( Persister(AnnotationStrategy())))
+        // GSON Serializer:  .addConverterFactory( GsonConverterFactory.create() )
+        .addConverterFactory( Json.asConverterFactory("application/json".toMediaType()) )
+        .addCallAdapterFactory( RxJava2CallAdapterFactory.create() )
+        .client(okHttpClient)
+        .build()
 
 
     @Provides

@@ -91,3 +91,9 @@ Tfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ParentAdapt
 Sfeaturetwo/src/main/java/aalto/kotlin/experiment/featuretwo/adapter/ChildAdapter.kt,f\6\f6ac135ed3d62666f4759e172dadc98164744f9e
 j
 :featuretwo/src/main/graphql/example/rocketserver/Apollo.kt,8\2\827f9d9434d99386c66c2aff58d0a2829aa56405
+G
+base/proguard-rules.pro,f\8\f859d0776891d2793bf21c2e13e91622e860e4b1
+Å
+Qbase/src/main/java/aalto/kotlin/experiment/base/network/models/pfj/PFJLocation.kt,5\a\5a4b8dfd167a95ee60abcb0031d6d43e169c098d
+
+Ofeatureone/src/main/java/aalto/kotlin/experiment/featureone/base/MapActivity.kt,8\8\881854803b4c80e74baa289d97a34bd57075902d

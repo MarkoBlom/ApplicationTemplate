@@ -16,6 +16,8 @@ import kotlinx.coroutines.Job
 import java.lang.ref.WeakReference
 import kotlin.coroutines.CoroutineContext
 
+
+
 /**
  * Base class for used ViewModels, it receives the Activity (View) lifecycle notifications/callbacks.
  *
@@ -104,5 +106,9 @@ open class BaseViewModel : IViewModel, CoroutineScope {
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         // stub:
         // By default ViewModel's onRestoreInstanceState -callback does nothing
+    }
+
+    override fun onMapReady(map: Any?) {
+        //stub
     }
 }

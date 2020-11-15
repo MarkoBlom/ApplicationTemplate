@@ -3,6 +3,10 @@
 
     <application>
 
+        <!--Google MAP API key-->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCGDjZ1iYxnOyOm3LJQY7m9S5Nz3BT2FiY" />
 
         <!-- APP BAR BACK BTN navigation target: android:parentActivityName=".Activity1"-->
         <activity

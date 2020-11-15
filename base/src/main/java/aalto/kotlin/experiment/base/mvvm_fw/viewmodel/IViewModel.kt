@@ -13,8 +13,6 @@ import android.os.Bundle
  */
 interface IViewModel {
 
-
-
     // Handle lifecycle callbacks from View here:
     fun onCreate()
 
@@ -39,4 +37,7 @@ interface IViewModel {
     fun onSaveInstanceState(outState: Bundle?)
 
     fun onRestoreInstanceState(savedInstanceState: Bundle?)
+
+    // For GoogleMap callback
+    fun onMapReady(map: Any?) // we don't want to declare a dependency to Maps here
 }

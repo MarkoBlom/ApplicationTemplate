@@ -2,7 +2,6 @@ package aalto.kotlin.experiment.featureone
 
 import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.mvvm_fw.Action
-import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.NoConnectivityException
 import aalto.kotlin.experiment.base.network.WebApi
@@ -11,12 +10,16 @@ import aalto.kotlin.experiment.base.network.models.rickandmorty.Episode
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
-
 
 /**
  * Constructor Injection
@@ -24,6 +27,10 @@ import retrofit2.Response
 class FeatureOneViewModel(private val model: BaseRepository,
                           private val webApi: WebApi
                            ) : BaseViewModel() {
+
+    var mGoogleMap: GoogleMap? = null
+
+    var mIsMapAvailable = false
 
     var mCounter = 5
 
@@ -85,14 +92,17 @@ class FeatureOneViewModel(private val model: BaseRepository,
         // save to Repository
         resp?.let{
             model.pfjLocations = resp
-        }
 
-        nextAction.value = Action.create(Action.Type.PFJ_LOCATION_DATA_READY)
+            if (mIsMapAvailable)
+                populateMap()
+        }
     }
 
 
     override fun onDestroy() {
         Log.d("=MB=","FeatureOneViewModel::onDestroy()")
+
+        mIsMapAvailable = false
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -199,4 +209,46 @@ class FeatureOneViewModel(private val model: BaseRepository,
             nextAction.value = Action.create(Action.Type.NEXT_SCREEN)
         }
     }
+
+    //region GOOGLE MAP
+    override fun onMapReady(googleMap: Any?) {
+        Log.d("=MB=", "FeatureOneViewModel::onMapReady() callback")
+
+        googleMap?.let {
+            mGoogleMap = googleMap as GoogleMap
+            mIsMapAvailable = true;
+
+            if( model.pfjLocations.isNotEmpty() )
+                populateMap()
+
+        }
+    }
+
+    private fun populateMap() {
+        Log.d("=MB=", "FeatureOneActivity::populateMap()")
+
+        val icon = BitmapDescriptorFactory.fromResource(R.drawable.checkmark_blue)
+
+        var location: LatLng
+
+        // Add markers to the map:
+        for( loc in model.pfjLocations) {
+
+            location = LatLng(loc.lat.toDouble(), loc.long.toDouble())
+
+            mGoogleMap?.addMarker(MarkerOptions()
+                .position(location)
+                .title(loc.name)
+                .icon(icon))
+        }
+
+        // Use the Geographic Center of the Contiguous United States:
+        //Lebanon, Kansas
+        val center = LatLng(39.8097343, -98.5556199)
+        // 15.0f means street level accuracy
+        // 5f is continent level
+        mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 3.0f))
+    }
+
+    //endregion
 }
