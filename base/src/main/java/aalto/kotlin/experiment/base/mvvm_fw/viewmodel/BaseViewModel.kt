@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -25,7 +26,9 @@ import kotlin.coroutines.CoroutineContext
  * https://developer.android.com/guide/components/activities/activity-lifecycle
  *
  */
-open class BaseViewModel : IViewModel, CoroutineScope {
+open class BaseViewModel : BaseObservable(),
+                            IViewModel,
+                            CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main // + mJob
