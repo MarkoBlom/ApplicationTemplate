@@ -1,5 +1,7 @@
 package aalto.kotlin.experiment.base
 
+import aalto.kotlin.experiment.base.dagger.ApplicationModule
+import aalto.kotlin.experiment.base.dagger.BaseComponent
 import aalto.kotlin.experiment.base.dagger.DaggerBaseComponent
 import aalto.kotlin.experiment.base.utilities.ActivityLifecycles
 import android.app.Application
@@ -14,9 +16,7 @@ class BaseApplication: Application() {
     private val mLifecycles = ActivityLifecycles()
 
     companion object {
-        val baseComponent by lazy {
-            DaggerBaseComponent.create()
-        }
+        lateinit var baseComponent: BaseComponent
     }
 
     /**
@@ -24,6 +24,12 @@ class BaseApplication: Application() {
      */
     override fun onCreate() {
         super.onCreate()
+
+        //init base component
+        baseComponent = DaggerBaseComponent.builder()
+            .applicationModule( ApplicationModule(this) ) // context provider
+            .build()
+
 
         // Memory leak detection by using LeakCanary
         // (Profiler tool is invented too but LeakCanary is

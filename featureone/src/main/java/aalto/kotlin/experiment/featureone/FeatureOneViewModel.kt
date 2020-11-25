@@ -25,8 +25,7 @@ import retrofit2.Response
  * Constructor Injection
  */
 class FeatureOneViewModel(private val model: BaseRepository,
-                          private val webApi: WebApi
-                           ) : BaseViewModel() {
+                          private val webApi: WebApi ) : BaseViewModel() {
 
     var mGoogleMap: GoogleMap? = null
 
