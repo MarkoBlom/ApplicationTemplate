@@ -5,6 +5,7 @@ import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.network.WebApi
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 
@@ -13,7 +14,8 @@ class MainModule() {
 
     @Provides
     fun providesMainViewModel(baseRepository: BaseRepository,
-                              webApi: WebApi
-    ) : IViewModel = MainViewModel(baseRepository, webApi)
+                              webApi: WebApi,
+                              context: Context
+    ) : IViewModel = MainViewModel(baseRepository, webApi, context)
 
 }

@@ -5,14 +5,21 @@ import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.WebApi
+import android.content.Context
 import android.util.Log
 import android.view.View
+import androidx.databinding.Bindable
 
 /**
  *
  */
 class MainViewModel(private val baseRepository: BaseRepository,
-                    private val webApi: WebApi ) : BaseViewModel(){
+                    private val webApi: WebApi,
+                    private val context: Context
+): BaseViewModel(){
+
+    @Bindable
+    var headerText = ""
 
     /**
      *
@@ -36,9 +43,32 @@ class MainViewModel(private val baseRepository: BaseRepository,
      * Goto Feature One -btn clicked
      */
     fun onNextClicked(view : View) {
-        Log.d("=MB=","MainViewModel::onNextClicked()")
+        Log.d(TAG,"MainViewModel::onNextClicked()")
 
         nextAction.value = Action.create(Action.Type.NEXT_SCREEN)
     }
 
+    /**
+     * One of the header navigation buttons ('Messages','Talk','Profile','Options','Care Team') is clicked
+     */
+    fun onHeaderItemClicked(view : View) {
+        Log.d(TAG,"MainViewModel::onHeaderItemClicked( to: ${view.tag} )")
+
+        // Update navigation header text accordingly
+        when(view.tag) {
+            context.getString(R.string.messages) -> headerText = context.getString(R.string.messages)
+
+            context.getString(R.string.talk) -> headerText = context.getString(R.string.talk)
+
+            context. getString(R.string.profile) -> headerText = context.getString(R.string.profile)
+
+            context.getString(R.string.options) -> headerText = context.getString(R.string.options)
+
+            context.getString(R.string.care_team) -> headerText = context.getString(R.string.care_team)
+        }
+        notifyPropertyChanged(BR.headerText)
+
+        // let the View handle the transition
+        nextAction.value = Action.create(Action.Type.NEXT_TAB, mapOf("VIEW_TAG" to view.tag))
+    }
 }

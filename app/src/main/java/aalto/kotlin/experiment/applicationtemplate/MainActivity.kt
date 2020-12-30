@@ -12,7 +12,12 @@ import aalto.kotlin.experiment.featureone.FeatureOneActivity
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.IViewModel
+import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.homescreen_main_header.*
 import javax.inject.Inject
+
+const val TAG = "=MB="
 
 class MainActivity : ViewModelActivity() {
 
@@ -40,7 +45,7 @@ class MainActivity : ViewModelActivity() {
         setContentView(rootView)
 
         // bind viewModel
-        binding!!.setViewModel(mViewModel as MainViewModel)
+        binding!!.viewModel = mViewModel as MainViewModel
     }
 
     /**
@@ -51,9 +56,12 @@ class MainActivity : ViewModelActivity() {
 
         when (action.type) {
             Action.Type.NEXT_SCREEN -> {
+
                 startActivity(Intent(this, FeatureOneActivity::class.java))
                 //overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
             }
+
+            Action.Type.NEXT_TAB -> transitionToNextScreen( action.data?.get("VIEW_TAG") as String )
 
             Action.Type.PROGRESS_ANIM_SHOW -> { /*etc.*/ }
 
@@ -61,5 +69,55 @@ class MainActivity : ViewModelActivity() {
                 Log.d("=MB=","  -> Unhandled action");
             }
         }
+    }
+
+    /**
+     * Uses the tag (string) passed from ViewModel to determine where to navigate
+     */
+    private fun transitionToNextScreen(tag: String) {
+        Log.d(TAG, "MainActivity::navigateToNextScreen( to: $tag )")
+
+        when(tag) {
+            getString(R.string.messages) -> {
+                messages_img.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+                messages.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+            }
+
+            getString(R.string.talk) -> {
+                talk_img.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+                talk.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+            }
+
+            getString(R.string.profile) -> {
+                profile_img.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+                profile.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+
+//                val view = layoutInflater.inflate(R.layout.homescreen_profile_header, null, true)
+//                val binding = DataBindingUtil.bind<HomescreenProfileHeaderBinding>(view)
+//                binding?.viewModel = mViewModel as HomeScreenViewModel
+//
+//                endScene = Scene(sceneRootHeader, view)
+            }
+
+            getString(R.string.options) -> {
+                options_img.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+                options.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+            }
+
+            getString(R.string.care_team) -> {
+                care_team_img.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+                care_team.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
+            }
+        }
+//
+//        val view = layoutInflater.inflate(R.layout.homescreen_profile_header, null, true)
+//        val binding = DataBindingUtil.bind<HomescreenProfileHeaderBinding>(view)
+//        binding?.viewModel = mViewModel as HomeScreenViewModel
+//
+//        endScene = Scene(sceneRootHeader, view)
+//
+//        Handler().postDelayed({
+//            TransitionManager.go(endScene, fadeTransition)
+//        }, 500)
     }
 }
