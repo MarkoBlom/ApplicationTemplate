@@ -21,6 +21,7 @@ import android.transition.TransitionInflater
 import android.transition.TransitionManager
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.homescreen_main_header.*
 import kotlinx.android.synthetic.main.homescreen_tab_header.*
@@ -92,6 +93,8 @@ class MainActivity : ViewModelActivity() {
     private fun transitionToNextScreen(tag: String) {
         Log.d(TAG, "MainActivity::navigateToNextScreen( to: $tag )")
 
+        clearFindViewByIdCache()
+
         // show button clicked animation ( for both image & text)
         when(tag) {
             getString(R.string.messages) -> {
@@ -135,6 +138,8 @@ class MainActivity : ViewModelActivity() {
      *
      */
     private fun handleNavigationBackFromTab(){
+
+        clearFindViewByIdCache()
 
         // animate back button click
         tab_back_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
