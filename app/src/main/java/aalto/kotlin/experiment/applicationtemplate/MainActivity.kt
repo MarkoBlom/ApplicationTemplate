@@ -93,6 +93,7 @@ class MainActivity : ViewModelActivity() {
     private fun transitionToNextScreen(tag: String) {
         Log.d(TAG, "MainActivity::navigateToNextScreen( to: $tag )")
 
+        // apply this because view cache is invalid after inflating new tab
         clearFindViewByIdCache()
 
         // show button clicked animation ( for both image & text)
@@ -139,6 +140,7 @@ class MainActivity : ViewModelActivity() {
      */
     private fun handleNavigationBackFromTab(){
 
+        // apply this because view cache is invalid after inflating home screen
         clearFindViewByIdCache()
 
         // animate back button click
