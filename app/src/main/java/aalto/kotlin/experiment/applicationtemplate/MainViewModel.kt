@@ -15,9 +15,11 @@ import androidx.databinding.Bindable
  */
 class MainViewModel(private val baseRepository: BaseRepository,
                     private val webApi: WebApi,
-                    private val context: Context
-): BaseViewModel(){
+                    private val context: Context): BaseViewModel(){
 
+    /**
+     * Text to show in tab header
+     */
     @Bindable
     var headerText = ""
 
@@ -70,5 +72,14 @@ class MainViewModel(private val baseRepository: BaseRepository,
 
         // let the View handle the transition
         nextAction.value = Action.create(Action.Type.NEXT_TAB, mapOf("VIEW_TAG" to view.tag))
+    }
+
+    /**
+     *
+     */
+    fun onBackButtonClicked(view: View) {
+        Log.d(TAG,"MainViewModel::onBackButtonClicked( from: ${view.tag} )")
+
+        nextAction.value = Action.create(Action.Type.BACK_FROM_TAB)
     }
 }

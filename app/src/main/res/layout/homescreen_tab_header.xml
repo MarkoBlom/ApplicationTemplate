@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="ExtraText">
+
+    <data>
+        <import type="aalto.kotlin.experiment.applicationtemplate.MainViewModel"/>
+        <variable name="viewModel" type="MainViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- HEADER TEXT -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{viewModel.headerText}"
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            tools:text="profile"/>
+
+        <!-- BACK BUTTON -->
+        <ImageView
+            android:tag="@string/tag_back_button"
+            android:id="@+id/tab_back_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/back_arrow_64"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            android:onClick="@{viewModel::onBackButtonClicked}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
