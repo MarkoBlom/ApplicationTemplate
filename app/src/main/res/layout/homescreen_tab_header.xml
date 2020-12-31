@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@{viewModel.headerText}"
             android:textSize="40sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorBlue"
             android:textStyle="bold"
             tools:text="profile"/>
 

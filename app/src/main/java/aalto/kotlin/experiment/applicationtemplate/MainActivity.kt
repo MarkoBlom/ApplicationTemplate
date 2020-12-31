@@ -124,6 +124,7 @@ class MainActivity : ViewModelActivity() {
             }
         }
 
+        // transition
         val view = layoutInflater.inflate(R.layout.homescreen_tab_header, null, true)
         val binding = DataBindingUtil.bind<HomescreenTabHeaderBinding>(view)
         binding?.viewModel = mViewModel as MainViewModel
@@ -136,7 +137,7 @@ class MainActivity : ViewModelActivity() {
     }
 
     /**
-     *
+     * Back button is clicked from header
      */
     private fun handleNavigationBackFromTab(){
 
@@ -146,6 +147,7 @@ class MainActivity : ViewModelActivity() {
         // animate back button click
         tab_back_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_click))
 
+        // transition
         val view = layoutInflater.inflate(R.layout.homescreen_main_header, null, true)
         val binding = DataBindingUtil.bind<HomescreenMainHeaderBinding>(view)
         binding?.viewModel = mViewModel as MainViewModel
