@@ -73,8 +73,8 @@ class BaseNetworkModule {
             //.addInterceptor( CheckNetworkConnectionInterceptor(contextRef) )  NO CONNECTIVITY DETECTION
             //.addNetworkInterceptor( SSLHandshakeInterceptor() ) NO TLS VERSION
             .addNetworkInterceptor( logging )
-            //.certificatePinner( certPinner ) NO SSL HANDSHAKE
-            //.connectionSpecs( Collections.singletonList(spec) ) NO CIPHERS FOR DATA ENCRYPTION
+            //.certificatePinner( certPinner )
+            //.connectionSpecs( Collections.singletonList(spec) )
             //.connectTimeout( NetworkConstant.CONNECT_TIMEOUT, TimeUnit.MINUTES)
             //.writeTimeout( NetworkConstant.WRITE_TIMEOUT, TimeUnit.MINUTES)
             //.readTimeout( NetworkConstant.THRESHOLD_FOR_TIMEOUT_REVERSAL, TimeUnit.MILLISECONDS) // timeout for reading data from connected socket
