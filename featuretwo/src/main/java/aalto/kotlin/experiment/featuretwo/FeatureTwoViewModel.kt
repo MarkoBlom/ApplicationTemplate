@@ -1,6 +1,5 @@
 package aalto.kotlin.experiment.featuretwo
 
-import aalto.kotlin.experiment.base.mvvm_fw.view.IViewContract
 import aalto.kotlin.experiment.base.network.WebApi
 import aalto.kotlin.experiment.base.model.BaseRepository
 import aalto.kotlin.experiment.base.mvvm_fw.Action

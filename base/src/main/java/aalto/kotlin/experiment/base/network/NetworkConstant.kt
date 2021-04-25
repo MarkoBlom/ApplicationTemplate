@@ -15,8 +15,24 @@ class NetworkConstant {
          */
         const val BASE_URL = "raw.githubusercontent.com/simonsickle/pfj-locations/master/"
 
+        /**
+         * The time that lasts from starting the request to a completed TCP handshake with the server.
+         * If Retrofit couldn't establish a connection to the server within the set connection timeout limit,
+         * it'll count the request as failed
+         */
         const val CONNECT_TIMEOUT = 1L // [min]
-        //const val READ_TIMEOUT = 1L // [min]
+
+        /**
+         * Once the connection is established and then client watches how fast (or slow) every byte
+         * gets transferred to you. If the time between two bytes gets larger than the read timeout,
+         * it'll count the request as failed.
+         */
+        const val READ_TIMEOUT = 1L // [min]
+
+        /**
+         * write timeout is the opposite direction of the read timeout.
+         * It checks how fast you can send bytes to the server.
+         */
         const val WRITE_TIMEOUT = 1L // [min]
 
         // Timeout reversal (TOR) related:

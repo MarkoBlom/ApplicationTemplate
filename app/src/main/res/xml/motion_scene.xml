@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MotionScene
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@layout/activity_main_without_banner"
+        motion:constraintSetEnd="@layout/activity_main_with_banner"
+        motion:duration="700">
+    </Transition>
+
+</MotionScene>

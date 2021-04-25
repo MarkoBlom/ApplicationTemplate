@@ -50,6 +50,13 @@ class MainViewModel(private val baseRepository: BaseRepository,
     }
 
     /**
+     *
+     */
+    fun onValidPhoneNumberEntered() {
+        nextAction.value = Action.create(Action.Type.VALID_PHONE_NUMBER_ENTERED)
+    }
+
+    /**
      * One of the header navigation buttons ('Messages','Talk','Profile','Options','Care Team') is clicked
      */
     fun onHeaderItemClicked(view : View) {
