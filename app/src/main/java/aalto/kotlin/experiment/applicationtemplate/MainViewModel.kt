@@ -5,6 +5,7 @@ import aalto.kotlin.experiment.base.mvvm_fw.Action
 import aalto.kotlin.experiment.base.mvvm_fw.viewmodel.BaseViewModel
 import aalto.kotlin.experiment.base.network.WebApi
 import android.content.Context
+import android.text.SpannableString
 import android.util.Log
 import android.view.View
 import androidx.databinding.Bindable
@@ -87,5 +88,9 @@ class MainViewModel(private val baseRepository: BaseRepository,
         Log.d(TAG,"MainViewModel::onBackButtonClicked( from: ${view.tag} )")
 
         nextAction.value = Action.create(Action.Type.BACK_FROM_TAB)
+    }
+
+    companion object {
+
     }
 }

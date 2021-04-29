@@ -14,4 +14,7 @@
     <string name="options">Options</string>
     <string name="care_team">Care Team</string>
 
+    <string name="enter_valid_phone_underline"><u>Please enter a valid phone num#</u></string>
+    <string name="enter_valid_phone">Please enter a valid phone num#</string>
+
 </resources>

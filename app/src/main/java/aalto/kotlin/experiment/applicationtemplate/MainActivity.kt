@@ -15,6 +15,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.UnderlineSpan
 import android.transition.Scene
 import android.transition.Transition
 import android.transition.TransitionInflater
@@ -23,6 +26,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main_without_banner.*
@@ -42,6 +46,8 @@ class MainActivity : ViewModelActivity() {
     lateinit var sceneRootHeader: ViewGroup
 
     lateinit var fadeTransition: Transition
+
+    private lateinit var myString: String
 
     /**
      * Kick off injection here : ViewModel
@@ -97,7 +103,7 @@ class MainActivity : ViewModelActivity() {
         fadeTransition = TransitionInflater.from(this)
             .inflateTransition(R.transition.fade_transition)
 
-
+        myString = getString(R.string.enter_valid_phone)
     }
 
     /**
@@ -115,7 +121,7 @@ class MainActivity : ViewModelActivity() {
 
         return when(id) {
             999 -> DatePickerDialog(
-                this,
+                this, R.style.MyDatePickerStyle,
                 myDateListener, mCalendar.get(Calendar.YEAR),
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)
@@ -141,6 +147,12 @@ class MainActivity : ViewModelActivity() {
             Action.Type.NEXT_SCREEN -> {
 
                 if( phonenum_edit.text!!.length < 12 ) {
+
+                    val content = SpannableString(myString).apply{
+                        setSpan(UnderlineSpan (), 0, myString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                    main_banner.text = content
+
                     // show banner if transition has not occurred yet
                     if( main_motionLayout.progress == 0.0f ) {
                         main_motionLayout.transitionToEnd()
@@ -241,5 +253,15 @@ class MainActivity : ViewModelActivity() {
         Handler().postDelayed({
             TransitionManager.go(endScene, fadeTransition)
         }, 500)
+    }
+
+    companion object {
+
+        init {
+
+
+
+        }
+
     }
 }
